@@ -5,6 +5,9 @@
 	$retVal["error_get_last()"] = error_get_last();
 	$retVal["error_reporting()"] = error_reporting();
 	$retVal["gc_enabled()"] = gc_enabled();
+	$retVal["get_current_user()"] = get_current_user();
+	$retVal["getcwd()"] = getcwd();
+	$retVal["gethostname()"] = gethostname();
 	$retVal["get_loaded_extensions()"] = get_loaded_extensions();
 	$retVal["gmdate(DATE_ISO8601)"] = gmdate(DATE_ISO8601);
 	//too much: $retVal["get_defined_constants()"] = get_defined_constants();
@@ -17,6 +20,7 @@
 	$retVal["php_uname()"] = php_uname();
 	$retVal["PHP_VERSION_ID"] = PHP_VERSION_ID;
 	$retVal["phpversion()"] = phpversion();
+	$retVal["sys_getloadavg()"] = sys_getloadavg();
 	$retVal["sys_get_temp_dir()"] = sys_get_temp_dir();
 
 	header('Content-type: text/plain');
