@@ -13,7 +13,7 @@
 	$html = $html . "\t\t<tr>\n";
 	$html = $html . "\t\t\t<td>Regular Expression</td>\n";
 	$html = $html . "\t\t\t<td>";
-	$html = $html . htmlspecialchars(regex);
+	$html = $html . htmlspecialchars($regex);
 	$html = $html . "</td>";
 	$html = $html . "\t\t</tr>\n";
 
@@ -26,7 +26,7 @@
 	$html = $html . "\t\t<tr>\n";
 	$html = $html . "\t\t\t<td>Replacement</td>\n";
 	$html = $html . "\t\t\t<td>";
-	$html = $html . htmlspecialchars(replacement);
+	$html = $html . htmlspecialchars($replacement);
 	$html = $html . "</td>\n";
 	$html = $html . "\t\t</tr>\n";
 
