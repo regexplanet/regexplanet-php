@@ -15,6 +15,7 @@
 	$retVal["memory_get_usage()"] = memory_get_usage();
 	$retVal["memory_get_peak_usage()"] = memory_get_peak_usage();
 	$retVal["microtime(True)"] = microtime(True);
+	$retVal["PCRE_VERSION"] = PCRE_VERSION;
 	$retVal["PHP_OS"] = PHP_OS;
 	$retVal["php_sapi_name()"] = php_sapi_name();
 	$retVal["php_uname()"] = php_uname();
