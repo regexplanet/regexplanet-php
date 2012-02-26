@@ -18,4 +18,4 @@
 		header("access-control-allow-origin: *");
 		echo $retVal;
 	}
-%>
+?>
