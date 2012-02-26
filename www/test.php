@@ -2,7 +2,6 @@
 
 	$retVal = array("success" => True);
 
-	$retVal["html"] = "<p>It isn't ready yet!</p>";
 
 	$regex = $_REQUEST["regex"];
 	$replacement = $_REQUEST["replacement"];
@@ -32,6 +31,8 @@
 
 	$html = $html . "\t</tbody>\n";
 	$html = $html . "</table>\n";
+
+	$retVal["html"] = $html;
 
 	if (isset($_REQUEST['callback']))
 	{
