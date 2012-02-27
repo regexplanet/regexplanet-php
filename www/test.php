@@ -55,7 +55,7 @@
 
 		$html = $html . "\t\t\t<td>";
 		$html = $html . htmlspecialchars($test);
-		$html = $html . "</td>\n");
+		$html = $html . "</td>\n";
 
 		$html = $html . "\t\t</tr>\n";
 	}
