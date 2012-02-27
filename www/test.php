@@ -49,13 +49,22 @@
 	{
 		$test = $inputs[$loop];
 
+		if (strlen($test) == 0)
+		{
+			continue;
+		}
+
 		$html = $html . "\t\t<tr>\n";
 		$html = $html . "\t\t\t<td style=\"text-align:center\">";
-		$html = $html . $loop;
+		$html = $html . ($loop+1);
 		$html = $html . "</td>\n";
 
 		$html = $html . "\t\t\t<td>";
 		$html = $html . htmlspecialchars($test);
+		$html = $html . "</td>\n";
+
+		$html = $html . "\t\t\t<td>";
+		$html = $html . htmlspecialchars(preg_replace($regex, $replacement, $test));
 		$html = $html . "</td>\n";
 
 		$html = $html . "\t\t</tr>\n";
