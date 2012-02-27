@@ -45,9 +45,10 @@
 
 	$inputs = get_parameter_values("input");
 
-	for ($loop = 0; loop < count($input); $loop++)
+	for ($loop = 0; $loop < count($inputs); $loop++)
 	{
 		$test = $inputs[$loop];
+
 		$html = $html . "\t\t<tr>\n";
 		$html = $html . "\t\t\t<td style=\"text-align:center\">";
 		$html = $html . $loop;
