@@ -90,7 +90,7 @@
 
 	$retVal["html"] = $html;
 
-	send_json($retVal)
+	send_json($retVal);
 
 	function send_json($data)
 	{
