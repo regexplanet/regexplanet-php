@@ -1,10 +1,25 @@
 <?php
 
-	$retVal = array("success" => True);
 
+	$original = $_REQUEST["regex"];
+	if (is_null($original) || strlen($original) == 0)
+	{
+		send_json(array("success" => False, "message" => "No regular expression to test"));
+		return;
+	}
 
-	$regex = $_REQUEST["regex"];
+	if (substr($original, 0, 1) == '/')
+	{
+		$regex = $original;
+	}
+	else
+	{
+		$regex = "/" . $original . "/";
+	}
+
 	$replacement = $_REQUEST["replacement"];
+
+	$retVal = array("success" => True);
 
 	$html = "<table class=\"table table-bordered table-striped bordered-table zebra-striped\" style=\"width:auto;\">";
 	$html = $html . "\t<tbody>";
@@ -12,7 +27,7 @@
 	$html = $html . "\t\t<tr>\n";
 	$html = $html . "\t\t\t<td>Regular Expression</td>\n";
 	$html = $html . "\t\t\t<td>";
-	$html = $html . htmlspecialchars($regex);
+	$html = $html . htmlspecialchars($original);
 	$html = $html . "</td>";
 	$html = $html . "\t\t</tr>\n";
 
@@ -75,21 +90,26 @@
 
 	$retVal["html"] = $html;
 
-	if (isset($_REQUEST['callback']))
+	send_json($retVal)
+
+	function send_json($data)
 	{
-		header('content-type: application/javascript; charset=utf-8');
-		echo $_REQUEST['callback'];
-		echo "(";
-		echo json_encode($retVal);
-		echo ")";
-	}
-	else
-	{
-		header('content-type: application/json; charset=utf-8');
-		header("Access-Control-Allow-Origin: *");
-		header('Access-Control-Allow-Methods: POST, GET');
-		header('Access-Control-Max-Age: 604800');
-		echo json_encode($retVal);
+		if (isset($_REQUEST['callback']))
+		{
+			header('content-type: application/javascript; charset=utf-8');
+			echo $_REQUEST['callback'];
+			echo "(";
+			echo json_encode($data);
+			echo ")";
+		}
+		else
+		{
+			header('content-type: application/json; charset=utf-8');
+			header("Access-Control-Allow-Origin: *");
+			header('Access-Control-Allow-Methods: POST, GET');
+			header('Access-Control-Max-Age: 604800');
+			echo json_encode($datal);
+		}
 	}
 
 	//WTF?	PHP doesn't support this by default?!?
