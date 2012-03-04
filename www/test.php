@@ -86,15 +86,44 @@
 	else
 	{
 		header('content-type: application/json; charset=utf-8');
-		header("access-control-allow-origin: *");
+		header("Access-Control-Allow-Origin: *");
+		header('Access-Control-Allow-Methods: POST, GET');
+		header('Access-Control-Max-Age: 604800');
 		echo json_encode($retVal);
 	}
 
-	//WTF?  PHP doesn't support this by default?!?
+	//WTF?	PHP doesn't support this by default?!?
 	function get_parameter_values($target)
 	{
-		//LATER: support for post from php_fix_raw_query at http://us.php.net/manual/en/reserved.variables.get.php
-		$raw = $_SERVER['QUERY_STRING'];
+		//from php_fix_raw_query at http://us.php.net/manual/en/reserved.variables.get.php
+		$post = '';
+
+		// Try globals array
+		if (!$post && isset($_GLOBALS) && isset($_GLOBALS["HTTP_RAW_POST_DATA"]))
+			$post = $_GLOBALS["HTTP_RAW_POST_DATA"];
+
+		// Try globals variable
+		if (!$post && isset($HTTP_RAW_POST_DATA))
+			$post = $HTTP_RAW_POST_DATA;
+
+		// Try stream
+		if (!$post) {
+			if (!function_exists('file_get_contents')) {
+				$fp = fopen("php://input", "r");
+				if ($fp) {
+					$post = '';
+
+					while (!feof($fp))
+					$post = fread($fp, 1024);
+
+					fclose($fp);
+				}
+			} else {
+				$post = "" . file_get_contents("php://input");
+			}
+		}
+
+		$raw = !empty($_SERVER['QUERY_STRING']) ? sprintf('%s&%s', $_SERVER['QUERY_STRING'], $post) : $post;
 
 		$arr = array();
 		$pairs = explode('&', $raw);
