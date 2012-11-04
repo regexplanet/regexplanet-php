@@ -24,6 +24,20 @@
 	$retVal["sys_getloadavg()"] = sys_getloadavg();
 	$retVal["sys_get_temp_dir()"] = sys_get_temp_dir();
 
-	header('Content-type: text/plain');
-	echo json_encode($retVal);
+	if (isset($_REQUEST['callback']))
+	{
+		header('content-type: application/javascript; charset=utf-8');
+		echo $_REQUEST['callback'];
+		echo "(";
+		echo json_encode($retVal);
+		echo ")";
+	}
+	else
+	{
+		header('content-type: application/json; charset=utf-8');
+		header("Access-Control-Allow-Origin: *");
+		header('Access-Control-Allow-Methods: POST, GET');
+		header('Access-Control-Max-Age: 604800');
+		echo json_encode($retVal);
+	}
 ?>
