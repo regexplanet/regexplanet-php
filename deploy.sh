@@ -1,4 +1,5 @@
 #
-# deploy php engine to PHPFog
+# deploy php engine to AppFog
 #
-git push phpfog
+cd www
+af update regexplanet-php
