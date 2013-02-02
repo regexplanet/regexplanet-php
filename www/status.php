@@ -23,7 +23,7 @@
 	$retVal["phpversion()"] = phpversion();
 	$retVal["sys_getloadavg()"] = sys_getloadavg();
 	$retVal["sys_get_temp_dir()"] = sys_get_temp_dir();
-	$retVal["version"] = "PHP " . phpversion() . " PCRE " . PCRE_VERSION;
+	$retVal["version"] = phpversion() . " (PCRE " . PCRE_VERSION . ")";
 
 	if (isset($_REQUEST['callback']))
 	{
