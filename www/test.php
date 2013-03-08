@@ -1,6 +1,36 @@
 <?php
 
 
+class ErrorHandler
+{
+	static $m_errstr = "";
+
+    // CATCHABLE ERRORS
+    public static function captureNormal($errno, $errstr, $errfile, $errline)
+    {
+    	ErrorHandler::$m_errstr = $errstr . " (" . strval($errno) . ")";
+
+    	//echo "CAUGHT: " . ErrorHandler::$m_errstr . " at " . $errfile . " line " . strval($errline) . "<br/>";
+
+    	return true;
+    }
+
+    public static function hasError()
+    {
+    	return strlen(ErrorHandler::$m_errstr) > 0 ? true : false;
+    }
+
+    public static function getLastError()
+    {
+    	$retVal =  ErrorHandler::$m_errstr;
+    	ErrorHandler::$m_errstr = "";
+    	return $retVal;
+    }
+}
+
+	set_error_handler ( array( 'ErrorHandler', 'captureNormal') );
+
+
 	$original = $_REQUEST["regex"];
 	if (is_null($original) || strlen($original) == 0)
 	{
@@ -45,6 +75,22 @@
 	$html = $html . "</td>\n";
 	$html = $html . "\t\t</tr>\n";
 
+	preg_match($regex, "");
+	$errstr = ErrorHandler::getLastError();
+	if (strlen($errstr) > 0)
+	{
+		$html = $html . "\t\t<tr>\n";
+		$html = $html . "\t\t\t<td>Error</td>\n";
+		$html = $html . "\t\t\t<td>";
+		$html = $html . htmlspecialchars($errstr);
+		$html = $html . "</td>\n";
+		$html = $html . "\t\t</tr>\n";
+		$html = $html . "\t</tbody>\n";
+		$html = $html . "</table>\n";
+		send_json(array("success" => False, "message" => $errstr, "html" => $html));
+		return;
+	}
+
 	$html = $html . "\t</tbody>\n";
 	$html = $html . "</table>\n";
 
@@ -53,7 +99,10 @@
 	$html = $html . "\t\t<tr>\n";
 	$html = $html . "\t\t\t<th style=\"text-align:center\">Test</th>\n";
 	$html = $html . "\t\t\t<th>Target String</th>\n";
+
+	$html = $html . "\t\t\t<th><a href=\"http://www.php.net/manual/en/function.preg-match.php\">preg_match()</a></th>\n";
 	$html = $html . "\t\t\t<th><a href=\"http://www.php.net/manual/en/function.preg-replace.php\">preg_replace()</a></th>\n";
+	$html = $html . "\t\t\t<th><a href=\"http://www.php.net/manual/en/function.preg-split.php\">preg_split()</a></th>\n";
 	$html = $html . "\t\t</tr>\n";
 	$html = $html . "\t</thead>\n";
 	$html = $html . "\t<tbody>\n";
@@ -79,14 +128,36 @@
 		$html = $html . "</td>\n";
 
 		$html = $html . "\t\t\t<td>";
+		$match = preg_match($regex, $test, $matches);
+		if ($match === FALSE)
+		{
+			$html = $html . "FALSE";
+		}
+		else
+		{
+			$html = $html . strval($match) . "<br/>";
+			$html = $html . "<pre>" . htmlspecialchars(print_r($matches, TRUE)) . "</pre>";
+		}
+		$html = $html . "</td>\n";
+
+		$html = $html . "\t\t\t<td>";
 		$html = $html . htmlspecialchars(preg_replace($regex, $replacement, $test));
 		$html = $html . "</td>\n";
 
+		$html = $html . "\t\t\t<td><pre>";
+		//$split = preg_split($regex, $test);
+		$html = $html . htmlspecialchars(print_r(preg_split($regex, $test), TRUE));
+		$html = $html . "</pre></td>\n";
 		$html = $html . "\t\t</tr>\n";
 	}
 
 	$html = $html . "\t</tbody>\n";
 	$html = $html . "<table>\n";
+
+	if (ErrorHandler::hasError())
+	{
+		$html = $html . "<div class=\"alert alert-error\">" . htmlspecialchars(ErrorHandler::getLastError()) . "</div>";
+	}
 
 	$retVal["html"] = $html;
 
