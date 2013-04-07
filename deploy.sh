@@ -1,7 +1,5 @@
+#!/bin/bash
 #
-# deploy php engine to AppFog
+# deploy to NearlyFreeSpeech
 #
-# you may need to af login first
-#
-cd www
-af update regexplanet-php
+scp -i /etc/fileformatnet/nfsnet.pem www/* fileformat_regexplanet-php@ssh.phx.nearlyfreespeech.net:/home/public
