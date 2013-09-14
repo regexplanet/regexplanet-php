@@ -10,7 +10,7 @@ class ErrorHandler
     {
     	ErrorHandler::$m_errstr = $errstr . " (" . strval($errno) . ")";
 
-    	//echo "CAUGHT: " . ErrorHandler::$m_errstr . " at " . $errfile . " line " . strval($errline) . "<br/>";
+    	echo "CAUGHT: " . ErrorHandler::$m_errstr . " at " . $errfile . " line " . strval($errline) . "<br/>";
 
     	return true;
     }
@@ -47,7 +47,7 @@ class ErrorHandler
 		$regex = "/" . $original . "/";
 	}
 
-	$replacement = $_REQUEST["replacement"];
+	$replacement = isset($_REQUEST["replacement"]) ? $_REQUEST["replacement"] : null;
 
 	$retVal = array("success" => True);
 
