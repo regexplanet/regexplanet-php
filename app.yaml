@@ -20,3 +20,6 @@ handlers:
 
 - url: /
   script: www/index.php
+
+- url: /
+  script: www/phpinfo.php

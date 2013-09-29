@@ -7,7 +7,7 @@
 	$retVal["gc_enabled()"] = gc_enabled();
 	$retVal["get_current_user()"] = get_current_user();
 	$retVal["getcwd()"] = getcwd();
-	$retVal["gethostname()"] = gethostname();
+	//no gae $retVal["gethostname()"] = gethostname();
 	$retVal["get_loaded_extensions()"] = get_loaded_extensions();
 	$retVal["gmdate(DATE_ISO8601)"] = gmdate(DATE_ISO8601);
 	//too much: $retVal["get_defined_constants()"] = get_defined_constants();
