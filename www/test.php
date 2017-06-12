@@ -107,7 +107,7 @@ class ErrorHandler
 	$html = $html . "\t</thead>\n";
 	$html = $html . "\t<tbody>\n";
 
-	$inputs = get_parameter_values("input");
+    $inputs = get_parameter_values("input");
 
 	for ($loop = 0; $loop < count($inputs); $loop++)
 	{
@@ -227,7 +227,7 @@ class ErrorHandler
 
 				if ($name == $target)
 				{
-					$arr[] = $value;
+					$arr[] = urldecode($value);
 				}
 			}
 		}
