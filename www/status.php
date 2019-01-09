@@ -1,6 +1,12 @@
 <?php
+	date_default_timezone_set('UTC');
 
 	$retVal = array("success" => True);
+	$retVal["message"] = "OK";
+	$retVal["timestamp"] = date('c');
+	$retVal["commit"] = getenv("COMMIT");
+	$retVal["lastmod"] = getenv("LASTMOD");
+	$retVal["tech"] = "PHP " . phpversion();
 
 	$retVal["error_get_last()"] = error_get_last();
 	$retVal["error_reporting()"] = error_reporting();
