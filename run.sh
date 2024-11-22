@@ -1,4 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
+# run locally
 #
-scp -i /etc/fileformatnet/nfsnet.pem www/test.php fileformat_regexplanet-tcl@ssh.phx.nearlyfreespeech.net:/home/public
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+if [ -f ".env" ]; then
+	export $(cat .env)
+fi
+
+cd www
+php -S localhost:${PORT:-5000}

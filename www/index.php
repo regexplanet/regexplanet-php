@@ -1,4 +1,3 @@
 <?php
-	header("Location: https://www.regexplanet.com/advanced/php/index.html");
-	exit;
-?>
+	header("Content-Type: text/plain");
+?>Running PHP <?php echo(phpversion()); ?>

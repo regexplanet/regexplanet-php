@@ -5,36 +5,42 @@ class ErrorHandler
 {
 	static $m_errstr = "";
 
-    // CATCHABLE ERRORS
-    public static function captureNormal($errno, $errstr, $errfile, $errline)
-    {
-    	ErrorHandler::$m_errstr = $errstr . " (" . strval($errno) . ")";
+	// CATCHABLE ERRORS
+	public static function captureNormal($errno, $errstr, $errfile, $errline)
+	{
+		ErrorHandler::$m_errstr = $errstr . " (" . strval($errno) . ")";
 
-    	echo "CAUGHT: " . ErrorHandler::$m_errstr . " at " . $errfile . " line " . strval($errline) . "<br/>";
+		echo "CAUGHT: " . ErrorHandler::$m_errstr . " at " . $errfile . " line " . strval($errline) . "<br/>";
 
-    	return true;
-    }
+		return true;
+	}
 
-    public static function hasError()
-    {
-    	return strlen(ErrorHandler::$m_errstr) > 0 ? true : false;
-    }
+	public static function hasError()
+	{
+		return strlen(ErrorHandler::$m_errstr) > 0 ? true : false;
+	}
 
-    public static function getLastError()
-    {
-    	$retVal =  ErrorHandler::$m_errstr;
-    	ErrorHandler::$m_errstr = "";
-    	return $retVal;
-    }
+	public static function getLastError()
+	{
+		$retVal =  ErrorHandler::$m_errstr;
+		ErrorHandler::$m_errstr = "";
+		return $retVal;
+	}
 }
 
 	set_error_handler ( array( 'ErrorHandler', 'captureNormal') );
+
+	if (!array_key_exists("regex", $_REQUEST))
+	{
+		send_json(array("success" => False, "message" => "Regular expression (regex parameter) not sent"));
+		return;
+	}
 
 
 	$original = $_REQUEST["regex"];
 	if (is_null($original) || strlen($original) == 0)
 	{
-		send_json(array("success" => False, "message" => "No regular expression to test"));
+		send_json(array("success" => False, "message" => "Regular expression is empty"));
 		return;
 	}
 
@@ -107,7 +113,7 @@ class ErrorHandler
 	$html = $html . "\t</thead>\n";
 	$html = $html . "\t<tbody>\n";
 
-    $inputs = get_parameter_values("input");
+	$inputs = get_parameter_values("input");
 
 	for ($loop = 0; $loop < count($inputs); $loop++)
 	{
